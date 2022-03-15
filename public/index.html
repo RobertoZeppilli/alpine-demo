@@ -1,14 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <link rel="stylesheet" href="styles.css">
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <title>Document</title>
 </head>
+
 <body>
-    <h1 x-data="{ message: 'I ❤️ Alpine' }" x-text="message"></h1>
+    <main>
+        <!-- counter -->
+        <section>
+            <h2>🌠 Counter 🌠</h2>
+            <div class="counter" x-data="{ count: 0 }">
+                <button class="btn" @click="count++">
+                    Increment
+                </button>
+                <span x-text="count"></span>
+            </div>
+        </section>
+        <!-- END counter -->
+
+        <!-- dropdown -->
+        <section>
+            <h2>🌌 Dropdown 🌌</h2>
+            <div class="dropdown" x-data="{ isOpen: false }">
+                <button class="btn" @click="isOpen = !isOpen" x-text="isOpen ? `hide` : `show`">
+                </button>
+                <span x-show="isOpen" @click.outside="isOpen = false">I ❤️ Alpine</span>
+            </div>
+        </section>
+        <!-- END dropdown -->
+
+        <!-- search-input -->
+        <section>
+            <h2>🧩 Search Input Filter 🧩</h2>
+            <div class="search-input" x-data="getSearchInputData()">
+                <input x-model="search" placeholder="Search...">
+
+                <ul>
+                    <template x-for="item in filteredItems" :key="item">
+                        <li x-text="item"></li>
+                    </template>
+                </ul>
+            </div>
+        </section>
+        <!-- END search-input -->
+    </main>
+
+    <script>
+
+        // data for search-input section
+        function getSearchInputData() {
+            return {
+                search: "",
+                items: ["Foo", "Baz", "Bar"],
+
+                // act as a computed property
+                get filteredItems() {
+                    return this.items.filter(item => item.toLowerCase().startsWith(this.search.toLocaleLowerCase()))
+                }
+            }
+        }
+
+    </script>
 </body>
+
 </html>
