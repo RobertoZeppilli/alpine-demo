@@ -61,8 +61,7 @@ main section {
     align-items: center;
     gap: 3em;
 }
-.counter span,
-.dropdown span {
+.counter span {
     font-size: 1.8em;
     font-weight: 700;
 }
@@ -70,11 +69,12 @@ main section {
 /* dropdown */
 .dropdown {
     position: relative;
+    background-color: orange;
 }
 .dropdown span {
     position: absolute;
     left: 50%;
-    bottom: 50%;
+    top: 50%;
     transform: translate(-50%, -50%);
 }
 
@@ -254,6 +254,8 @@ main section {
     outline: none;
     border: none;
     box-shadow: none;
+    max-width: 200px;
+    min-width: 50px;
 }
 .json-input:focus {
     box-shadow: none;
