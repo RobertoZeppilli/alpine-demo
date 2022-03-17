@@ -14,38 +14,37 @@
 <body>
     <main class="p-5">
         <!-- counter -->
-        <section class="bg-green-200 relative">
+        <section class="bg-green-200 relative" x-data>
             <h2 class="font-bold md:text-2xl mb-10">🌠 Counter 🌠</h2>
-            <div class="counter" x-data="{ count: 0 }">
-                <button class="btn" @click="count++">
-                    Increment
+            <div class="counter">
+                <button class="btn" @click="$store.data.increment()">
+                    +
                 </button>
-                <span x-text="count" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></span>
+                <button class="btn" @click="$store.data.decrement()">
+                    -
+                </button>
             </div>
+            <span x-text="$store.data.count"
+                class="absolute right-14 top-1/2 md:top-1/2 md:left-1/2 transform md:-translate-x-1/2 -translate-y-1/2"></span>
         </section>
         <!-- END counter -->
 
-        <!-- dropdown -->
+        <!-- toggle -->
         <section class="bg-blue-200 relative">
-            <h2 class="font-bold md:text-2xl mb-10">🌌 Dropdown 🌌</h2>
-            <div class="dropdown py-10" x-data="{ isOpen: false }">
+            <h2 class="font-bold md:text-2xl mb-10">🌌 Toggle 🌌</h2>
+            <div class="toggle" x-data="{ isOpen: false }">
                 <button class="btn" @click="isOpen = !isOpen" x-text="isOpen ? `hide` : `show`">
                 </button>
-                <span
-                    class="text-sm md:text-2xl font-semibold"
-                    x-transition:enter="transition ease-out duration-300"
-                    x-transition:enter-start="opacity-0 scale-90"
-                    x-transition:enter-end="opacity-100 scale-100"
+                <span class="text-sm md:text-2xl font-semibold" x-transition:enter="transition ease-out duration-300"
+                    x-transition:enter-start="opacity-0 scale-90" x-transition:enter-end="opacity-100 scale-100"
                     x-transition:leave="transition ease-in duration-300"
-                    x-transition:leave-start="opacity-100 scale-100"
-                    x-transition:leave-end="opacity-0 scale-90"
-                    x-show="isOpen"
-                    @click.outside="isOpen = false">
+                    x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-90"
+                    x-show="isOpen" @click.outside="isOpen = false">
                     I ❤️ Alpine
                 </span>
             </div>
         </section>
-        <!-- END dropdown -->
+        <!-- END toggle -->
 
         <!-- search-input -->
         <section class="bg-orange-200">
@@ -78,35 +77,19 @@
         <section class="flex flex-col" :class="$store.data.NaN ? 'bg-red-200' : 'bg-violet-200'" x-data>
             <h2 class="font-bold md:text-2xl mb-10">📊 JSON Data 📊</h2>
 
-            <small
-                class="font-bold"
-                :class="$store.data.NaN ? 'text-red-600' : 'text-green-600'"
-                x-text="$store.data.NaN ? 'Please Enter a Number!' : 'Insert a Number and get the phrase!'"
-            ></small>
+            <small class="font-bold" :class="$store.data.NaN ? 'text-red-600' : 'text-green-600'"
+                x-text="$store.data.NaN ? 'Please Enter a Number!' : 'Insert a Number and get the phrase!'"></small>
 
             <div class="py-5 flex">
-                <input
-                    class="json-input rounded-l"
-                    x-model="$store.data.jsonSearch"
-                    placeholder="Search..."
-                >
-                <button
-                    class="btn-no-radius bg-zinc-900 rounded-r"
-                    type="submit"
-                    @click="$store.data.fetchData()"
-                >Send</button>
+                <input class="json-input rounded-l" x-model="$store.data.jsonSearch" placeholder="Search...">
+                <button class="btn-no-radius bg-zinc-900 rounded-r" type="submit"
+                    @click="$store.data.fetchData()">Send</button>
             </div>
-            <p
-                class="md:text-2xl font-semibold"
-                x-show="$store.data.placeholder.title && !$store.data.NaN"
-                x-text="$store?.data?.placeholder?.title"
-                x-transition:enter="transition ease-in-out duration-300"
-                x-transition:enter-start="opacity-0 scale-30"
-                x-transition:enter-end="opacity-100 scale-100"
+            <p class="md:text-2xl font-semibold" x-show="$store.data.placeholder.title && !$store.data.NaN"
+                x-text="$store?.data?.placeholder?.title" x-transition:enter="transition ease-in-out duration-300"
+                x-transition:enter-start="opacity-0 scale-30" x-transition:enter-end="opacity-100 scale-100"
                 x-transition:leave="transition ease-in-out duration-300"
-                x-transition:leave-start="opacity-100 scale-100"
-                x-transition:leave-end="opacity-0 scale-30"
-            ></p>
+                x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-30"></p>
         </section>
         <!-- END JSON -->
     </main>
@@ -115,6 +98,17 @@
 
         document.addEventListener('alpine:init', () => {
             Alpine.store('data', {
+
+                // increment
+                count: 0,
+                increment() {
+                    this.count++
+                },
+                decrement() {
+                    if (this.count > 0) {
+                        this.count--
+                    }
+                },
 
                 // input search filter
                 search: "",
@@ -149,7 +143,7 @@
                         return
                     }
 
-                    if(Number(this.jsonSearch) > 200) {
+                    if (Number(this.jsonSearch) > 200) {
                         this.maxNumber = true
                         return
                     }
