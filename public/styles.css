@@ -62,15 +62,21 @@ main section {
     gap: 3em;
 }
 .counter span {
+    background: linear-gradient(var(--yellow-background), var(--blue-color));
+    height: 80px;
+    width: 80px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
     font-size: 1.8em;
-    font-weight: 700;
+    font-weight: bolder;
+    box-shadow: 5px 5px 5px var(--indigo-border);
 }
 
 /* dropdown */
-.dropdown {
-    position: relative;
-    background-color: orange;
-}
+
 .dropdown span {
     position: absolute;
     left: 50%;

@@ -14,19 +14,19 @@
 <body>
     <main class="p-5">
         <!-- counter -->
-        <section class="bg-green-200">
+        <section class="bg-green-200 relative">
             <h2 class="font-bold md:text-2xl mb-10">🌠 Counter 🌠</h2>
             <div class="counter" x-data="{ count: 0 }">
                 <button class="btn" @click="count++">
                     Increment
                 </button>
-                <span x-text="count"></span>
+                <span x-text="count" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></span>
             </div>
         </section>
         <!-- END counter -->
 
         <!-- dropdown -->
-        <section class="bg-blue-200">
+        <section class="bg-blue-200 relative">
             <h2 class="font-bold md:text-2xl mb-10">🌌 Dropdown 🌌</h2>
             <div class="dropdown py-10" x-data="{ isOpen: false }">
                 <button class="btn" @click="isOpen = !isOpen" x-text="isOpen ? `hide` : `show`">
@@ -86,12 +86,12 @@
 
             <div class="py-5 flex">
                 <input
-                    class="json-input"
+                    class="json-input rounded-l"
                     x-model="$store.data.jsonSearch"
                     placeholder="Search..."
                 >
                 <button
-                    class="btn-no-radius bg-zinc-900"
+                    class="btn-no-radius bg-zinc-900 rounded-r"
                     type="submit"
                     @click="$store.data.fetchData()"
                 >Send</button>
