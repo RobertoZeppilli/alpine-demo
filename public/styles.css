@@ -109,10 +109,7 @@ main section {
 .toggle--checkbox {
     display: none;
 }
-.toggle--checkbox:checked {
-    /** This will all flip from sun to moon **/
-    /** Change the label color **/
-}
+
 .toggle--checkbox:checked ~ .background {
     background: var(--indigo-background);
 }
@@ -266,4 +263,21 @@ main section {
 .json-input:focus {
     box-shadow: none;
     outline: none;
+}
+.disabled {
+    padding: .4em 1.5em;
+    border: none;
+    outline: none;
+    border-radius: .2em;
+    font-weight: 700;
+    background-color: black;
+    color: gray;
+    cursor: pointer;
+    transition: all .2s ease-in-out;
+}
+
+.ciao {
+    background-color: red;
+    height: 40px;
+    width: 100%;
 }

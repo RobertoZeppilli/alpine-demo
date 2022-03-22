@@ -6,9 +6,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
+
+    <!-- Tailwind css -->
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Alpine Plugins -->
+    <script defer src="https://unpkg.com/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+    <script defer src="https://unpkg.com/@alpinejs/focus@3.x.x/dist/cdn.min.js"></script>
+
+    <!-- Alpine Core -->
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <title>Document</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"
+        integrity="sha512-10/jx2EXwxxWqCLX/hHth/vu2KY3jCF70dCQB8TSgNjbCVAC/8vai53GfMDrO2Emgwccf2pJqxct9ehpzG+MTw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <title>Alpine.js Demo</title>
 </head>
 
 <body>
@@ -57,6 +71,7 @@
                         <li x-text="item"></li>
                     </template>
                 </ul>
+                <p class="font-semibold" x-show="$store.data.filteredItems.length === 0">No results. 🥲</p>
             </div>
         </section>
         <!-- END search-input -->
@@ -78,12 +93,14 @@
             <h2 class="font-bold md:text-2xl mb-10">📊 JSON Data 📊</h2>
 
             <small class="font-bold" :class="$store.data.NaN ? 'text-red-600' : 'text-green-600'"
-                x-text="$store.data.NaN ? 'Please Enter a Number!' : 'Insert a Number and get the phrase!'"></small>
+                x-text="$store.data.NaN ? 'Please Enter a Number Between 1 and 200!' : 'Insert a Number and get the phrase!'"></small>
 
             <div class="py-5 flex">
                 <input class="json-input rounded-l" x-model="$store.data.jsonSearch" placeholder="Search...">
-                <button class="btn-no-radius bg-zinc-900 rounded-r" type="submit"
-                    @click="$store.data.fetchData()">Send</button>
+                <button :disabled="!$store.data.jsonSearch"
+                    :class="!$store.data.jsonSearch ? 'disabled' : 'btn-no-radius bg-zinc-900 rounded-r cursor-pointer'"
+                    type="submit" @click="$store.data.fetchData()" x-text="!$store.data.jsonSearch ? '🤌🏼' : 'Send'">
+                </button>
             </div>
             <p class="md:text-2xl font-semibold" x-show="$store.data.placeholder.title && !$store.data.NaN"
                 x-text="$store?.data?.placeholder?.title" x-transition:enter="transition ease-in-out duration-300"
@@ -92,6 +109,85 @@
                 x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-30"></p>
         </section>
         <!-- END JSON -->
+
+        <!-- COPY TO CLIPBOARD -->
+        <section class="bg-lime-100" x-data>
+            <h2 class="font-bold md:text-2xl mb-10">✂️ Copy To Clipboard ✂️</h2>
+            <div class="py-5 flex">
+                <input class="json-input rounded-l" type="text" x-ref="message" placeholder="Your Message...">
+
+                <button class="btn-no-radius rounded-r cursor-pointer"
+                    @click="navigator.clipboard.writeText($refs.message.value)">
+                    Copy
+                </button>
+            </div>
+        </section>
+        <!-- END COPY TO CLIPBOARD -->
+
+
+
+        <section class="bg-teal-200">
+            <div class="mb-10">
+                <h2 class="font-bold md:text-2xl">🪃 Smooth Dropdown 🪃</h2>
+                <small class="font-semibold text-gray-500">(collapse plugin)</small>
+            </div>
+            <div x-data="{ expanded: false }">
+                <button class="btn mb-5" @click="expanded = ! expanded">
+                    <i x-show="!expanded" class="fa-solid fa-caret-down"></i>
+                    <i x-show="expanded" class="fa-solid fa-caret-up"></i>
+                </button>
+
+                <p x-show="expanded" x-collapse.duration.500ms>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum odit dolorum ipsam! Ut enim iste
+                    repellat quia quos repellendus, provident dolores nam ipsa, dicta amet illum neque pariatur
+                    recusandae alias, saepe quas magnam aliquid qui ratione fuga porro! Aliquid harum rerum quo,
+                    temporibus perspiciatis eius cumque rem voluptate, at officiis aut error, beatae porro numquam modi
+                    perferendis saepe necessitatibus ipsam. Repudiandae impedit cumque dolorem quidem eius illo voluptas
+                    dolores obcaecati, rerum eligendi officiis, enim tempore quibusdam illum esse, dignissimos odio.
+                    Dolore soluta, earum et vel unde sed suscipit mollitia numquam in voluptates reprehenderit pariatur
+                    consectetur. Quod quae sed quam consequuntur sit quis sequi reprehenderit, nulla ab obcaecati odit
+                    delectus in consequatur natus. Necessitatibus dignissimos praesentium quae perspiciatis,
+                    consequuntur eos doloremque dicta accusamus maxime laboriosam vel, maiores aliquid blanditiis,
+                    temporibus ullam?
+                </p>
+            </div>
+        </section>
+
+        <section class="bg-rose-200">
+            <div class="mb-10">
+                <h2 class="font-bold md:text-2xl">🦫 Nested Dialogs focus-trap 🦫</h2>
+                <small class="font-semibold text-gray-500">(focus plugin)</small>
+            </div>
+
+            <div x-data="{ open: false }">
+                <button class="btn mb-4" @click="open = true">Open Dialog</button>
+
+                <div class="bg-orange-100 p-5 rounded" x-show="open" x-trap="open" x-collapse.duration.500ms>
+
+                    <div class="flex flex-col gap-3 mb-3">
+                        <input class="json-input rounded-l" type="text" placeholder="Your Name...">
+                        <input class="json-input rounded-l" type="text" placeholder="Your Email...">
+                    </div>
+
+                    <div x-data="{ open: false }">
+                        <button class="btn mb-4" @click="open = true">Open Nested Dialog</button>
+
+                        <div class="bg-yellow-700 p-5 rounded" x-show="open" x-trap="open" x-collapse.duration.500ms>
+
+                            <div class="flex flex-col gap-3 mb-3">
+                                <input class="json-input rounded-l" type="text" placeholder="Your Secret Name...">
+                                <input class="json-input rounded-l" type="text" placeholder="Your Secret Email...">
+                            </div>
+
+                            <button class="btn" @click="open = false">Close Nested Dialog</button>
+                        </div>
+                    </div>
+
+                    <button class="text-gray-400 font-semibold text-sm" @click="open = false">Close Dialog</button>
+                </div>
+            </div>
+
+        </section>
     </main>
 
     <script>
@@ -159,6 +255,11 @@
                         console.log(error)
                     }
                 },
+
+                copyToClipboard() {
+                    navigator.clipboard.writeText($refs.content.value)
+                },
+
 
                 init() {
                     this.NaN = false
