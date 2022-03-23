@@ -257,7 +257,7 @@ main section {
     outline: none;
     border: none;
     box-shadow: none;
-    max-width: 200px;
+    max-width: 100%;
     min-width: 50px;
 }
 .json-input:focus {

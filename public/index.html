@@ -107,10 +107,12 @@
                 x-text="$store.data.NaN ? 'Please Enter a Number Between 1 and 200!' : 'Insert a Number and get the phrase!'"></small>
 
             <div class="py-5 flex">
-                <input x-ref="input" type="text" class="json-input invalid rounded-l" x-model="$store.data.jsonSearch" placeholder="Search...">
+                <input x-ref="input" type="text" class="json-input invalid rounded-l" x-model="$store.data.jsonSearch"
+                    placeholder="Search...">
                 <button :disabled="!$store.data.jsonSearch || $store.data.NaN"
                     :class="!$store.data.jsonSearch || $store.data.NaN ? 'disabled' : 'btn-no-radius bg-zinc-900 rounded-r cursor-pointer'"
-                    type="submit" @click="$store.data.fetchData()" x-text="!$store.data.jsonSearch || $store.data.NaN ? '🤌🏼' : 'Send'">
+                    type="submit" @click="$store.data.fetchData()"
+                    x-text="!$store.data.jsonSearch || $store.data.NaN ? '🤌🏼' : 'Send'">
                 </button>
             </div>
             <p class="md:text-2xl font-semibold" x-show="$store.data.placeholder.title && !$store.data.NaN"
@@ -124,13 +126,18 @@
         <!-- COPY TO CLIPBOARD -->
         <section class="bg-lime-100" x-data>
             <h2 class="font-bold md:text-2xl mb-10">✂️ Copy To Clipboard ✂️</h2>
-            <div class="py-5 flex">
+            <div class="py-5 flex flex-col gap-4">
                 <input class="json-input rounded-l" type="text" x-ref="message" placeholder="Your Message...">
 
-                <button class="btn-no-radius rounded-r cursor-pointer"
-                    @click="navigator.clipboard.writeText($refs.message.value)">
-                    Copy
-                </button>
+                <div class="flex flex-col gap-3 w-full md:flex-row">
+                    <button class="btn w-full md:w-24 cursor-pointer md:mr-4"
+                        @click="navigator.clipboard.writeText($refs.message.value)">
+                        Copy
+                    </button>
+                    <button class="btn w-full md:w-24 cursor-pointer" @click="$refs.message.value = ''">
+                        Clear
+                    </button>
+                </div>
             </div>
         </section>
         <!-- END COPY TO CLIPBOARD -->
@@ -262,7 +269,6 @@
                     this.NaN = false
                     this.maxNumber = false
                     this.toggle = false
-                    console.log("FROM INIT FUNCTION", this.NaN)
                 }
 
             })
