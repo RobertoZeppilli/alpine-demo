@@ -272,12 +272,25 @@ main section {
     font-weight: 700;
     background-color: black;
     color: gray;
-    cursor: pointer;
+    cursor: not-allowed;
     transition: all .2s ease-in-out;
 }
 
-.ciao {
-    background-color: red;
-    height: 40px;
-    width: 100%;
+.invalid:invalid {
+    animation-name: invalid;
+    animation-timing-function: ease-in-out;
+    animation-duration: .3s;
+    border: 2px solid red;
+}
+
+@keyframes invalid {
+    25% {
+        transform: translateX(4px);
+    }
+    50% {
+        transform: translateX(-4px);
+    }
+    75% {
+        transform: translateX(4px);
+    }
 }
