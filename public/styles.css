@@ -27,6 +27,27 @@ main section {
     border: .2em solid black;
     border-radius: .4em;
 }
+main > div {
+    position: relative;
+    margin-bottom: 4em;
+}
+
+/* underline */
+main > div:after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    height: 5px;
+    width: 100%;
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgb(7, 4, 80) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%);
+}
+
+/* logo */
+/* main > div > img {
+    max-width: 100%;
+} */
 
 .btn {
     padding: .4em 1.5em;
@@ -296,7 +317,6 @@ main section {
 }
 
 .tooltip {
-    /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
     background-color: #fff;
     color: #333;
 }
@@ -312,18 +332,6 @@ main section {
     border-top: 0;
     border-bottom: 20px solid #fff;
 }
-.show {
-    animation: show 1s ease-in-out;
-}
-
-@keyframes show {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
 .image-container,
 .image-container img {
     transition: all .5s ease-in-out;
@@ -338,3 +346,26 @@ main section {
     opacity: 0.6;
     border-radius: .5em;
 }
+
+
+.icon-left:hover {
+    transform: translateX(-0.325rem);
+}
+.icon-right:hover {
+    transform: translateX(0.325rem);
+}
+
+
+.show {
+    animation: show .5s ease-out;
+}
+
+@keyframes show {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+

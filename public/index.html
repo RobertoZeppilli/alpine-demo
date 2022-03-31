@@ -26,7 +26,10 @@
 </head>
 
 <body>
-    <main class="p-5">
+    <main class="p-5 lg:p-20">
+        <div class="flex justify-center mx-auto">
+            <img class="w-2/5 lg:w-full" src="https://alpinejs.dev/alpine_long.svg" alt="Alpine.js logo" />
+        </div>
         <!-- counter -->
         <section class="bg-green-200 relative" x-data>
             <h2 class="font-bold md:text-2xl mb-10">🌠 Counter 🌠</h2>
@@ -143,7 +146,7 @@
         <!-- END COPY TO CLIPBOARD -->
 
 
-
+        <!-- SMOOTH DROPDOWN -->
         <section class="bg-teal-200">
             <div class="mb-10">
                 <h2 class="font-bold md:text-2xl">🪃 Smooth Dropdown 🪃</h2>
@@ -170,79 +173,48 @@
                 </p>
             </div>
         </section>
+        <!-- END SMOOTH DROPDOWN -->
 
-        <section class="bg-rose-200">
-            <div class="mb-10">
-                <h2 class="font-bold md:text-2xl">🦫 Nested Dialogs focus-trap 🦫</h2>
-                <small class="font-semibold text-gray-500">(focus plugin)</small>
-            </div>
-
-            <div x-data="{ open: false }">
-                <button class="btn mb-4" @click="open = true">Open Dialog</button>
-
-                <div class="bg-orange-100 p-5 rounded" x-show="open" x-trap="open" x-collapse.duration.500ms>
-
-                    <div class="flex flex-col gap-3 mb-3">
-                        <input class="json-input rounded-l" type="text" placeholder="Your Name...">
-                        <input class="json-input rounded-l" type="text" placeholder="Your Email...">
-                    </div>
-
-                    <div x-data="{ open: false }">
-                        <button class="btn mb-4" @click="open = true">Open Nested Dialog</button>
-
-                        <div class="bg-yellow-700 p-5 rounded" x-show="open" x-trap="open" x-collapse.duration.500ms>
-
-                            <div class="flex flex-col gap-3 mb-3">
-                                <input class="json-input rounded-l" type="text" placeholder="Your Secret Name...">
-                                <input class="json-input rounded-l" type="text" placeholder="Your Secret Email...">
-                            </div>
-
-                            <button class="btn" @click="open = false">Close Nested Dialog</button>
-                        </div>
-                    </div>
-
-                    <button class="text-gray-400 font-semibold text-sm" @click="open = false">Close Dialog</button>
-                </div>
-            </div>
-        </section>
-
-
+        <!-- CAROUSEL -->
         <section>
             <div class="mb-10">
                 <h2 class="font-bold md:text-2xl">🕺🏼 Carousel 🕺🏼</h2>
             </div>
 
             <div class="flex items-center justify-evenly" x-data x-init="console.log($store.data.carousel)">
-                <i @click="$store.data.before()"
-                    class="fa-solid fa-arrow-left fa-4x cursor-pointer hover:text-gray-500 transition duration-150 ease-in-out"></i>
+                <div
+                    class="icon-left rounded-full hover:shadow-lg p-2 bg-white shadow-sm hover:text-gray-500 cursor-pointer transition duration-150 ease-in-out"
+                    @click="$store.data.before()"
+                >
+                    <i class="fa-solid fa-arrow-left"></i>
+                </div>
                 <div id="carousel" class="flex gap-5 items-center">
                     <template x-for="image, index in $store.data.imageGroups[$store.data.currentGroup]" :key="index">
-                        <div
-                            @mouseover="image.showTooltip = true"
-                            @mouseout="image.showTooltip = false"
+                        <div @mouseover="image.showTooltip = true" @mouseout="image.showTooltip = false"
                             class="shadow-lg p-5 image-container relative">
 
                             <img class="h-48 w-48" :src="image.pic" />
                             <span
-                                class="tooltip absolute bottom-8 right-8 px-3 rounded-md py-1 flex justify-center items-center text-xs"
-                                x-text="image.tooltip"
-                                x-show="image.showTooltip"
+                                class="tooltip font-semibold absolute bottom-8 right-8 px-4 rounded-md py-2 flex justify-center items-center text-xs"
+                                x-text="image.tooltip" x-show="image.showTooltip"
                                 x-transition:enter="transition ease-in-out duration-1000"
-                                x-transition:enter-start="opacity-0"
-                                x-transition:enter-end="opacity-100"
+                                x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
                                 x-transition:leave="transition ease-in-out duration-1000"
-                                x-transition:leave-start="opacity-100"
-                                x-transition:leave-end="opacity-0">
+                                x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
                             </span>
 
                         </div>
                     </template>
                 </div>
-                <i @click="$store.data.next()"
-                    class="fa-solid fa-4x fa-arrow-right cursor-pointer hover:text-gray-500 transition duration-150 ease-in-out"></i>
+                <div
+                    class="icon-right rounded-full p-2 bg-white shadow-sm hover:shadow-lg cursor-pointer hover:text-gray-500 transition duration-150 ease-in-out"
+                    @click="$store.data.next()"
+                >
+                    <i class="fa-solid fa-arrow-right"></i>
+                </div>
             </div>
-
         </section>
+        <!-- END CAROUSEL -->
 
 
     </main>
@@ -253,6 +225,7 @@
             Alpine.directive('uppercase', el => {
                 el.textContent = el.textContent.toUpperCase()
             })
+
             Alpine.store('data', {
 
                 // carousel
@@ -261,34 +234,41 @@
 
                 imageGroups: [
                     [
-                        { id: 0, tooltip: 'a plant', showTooltip: false, pic: './assets/photo-1.jpg' },
-                        { id: 1, tooltip: 'a plant', showTooltip: false, pic: './assets/photo-1.jpg' },
-                        { id: 2, tooltip: 'a plant', showTooltip: false, pic: './assets/photo-1.jpg' }
+                        { id: 0, tooltip: 'Taitō ku', showTooltip: false, pic: './assets/photo-11.jpg' },
+                        { id: 1, tooltip: 'Shinjuku', showTooltip: false, pic: './assets/photo-10.jpg' },
+                        { id: 2, tooltip: 'Japan', showTooltip: false, pic: './assets/photo-9.jpg' }
                     ],
                     [
-                        { id: 3, tooltip: 'skateboy', showTooltip: false, pic: './assets/photo-2.jpg' },
-                        { id: 4, tooltip: 'skateboy', showTooltip: false, pic: './assets/photo-2.jpg' },
-                        { id: 5, tooltip: 'skateboy', showTooltip: false, pic: './assets/photo-2.jpg' }
+                        { id: 3, tooltip: 'Manhattan', showTooltip: false, pic: './assets/photo-8.jpg' },
+                        { id: 4, tooltip: 'Paris', showTooltip: false, pic: './assets/photo-7.jpg' },
+                        { id: 5, tooltip: 'Brooklin', showTooltip: false, pic: './assets/photo-3.jpg' }
                     ],
                     [
-                        { id: 6, tooltip: 'lighthouse', showTooltip: false, pic: './assets/photo-3.jpg' },
-                        { id: 7, tooltip: 'lighthouse', showTooltip: false, pic: './assets/photo-3.jpg' },
-                        { id: 8, tooltip: 'lighthouse', showTooltip: false, pic: './assets/photo-3.jpg' }
+                        { id: 6, tooltip: 'Greece', showTooltip: false, pic: './assets/photo-6.jpg' },
+                        { id: 7, tooltip: 'India', showTooltip: false, pic: './assets/photo-4.jpg' },
+                        { id: 8, tooltip: 'Spain', showTooltip: false, pic: './assets/photo-5.jpg' }
                     ],
                 ],
 
 
                 currentGroup: 0,
-                toggleAnimation() {
-                    this.carousel.classList.add('show')
+                setAnimation() {
+                    this.carousel.childNodes[2].classList.add('show')
+                    this.carousel.childNodes[3].classList.add('show')
+                    this.carousel.childNodes[4].classList.add('show')
+                },
+                removeAnimation() {
                     setTimeout(() => {
-                        this.carousel.classList.remove('show')
-                    }, 1000);
+                        this.carousel.childNodes[2].classList.remove('show')
+                        this.carousel.childNodes[3].classList.remove('show')
+                        this.carousel.childNodes[4].classList.remove('show')
+                    }, 500)
                 },
 
                 next() {
                     this.currentGroup++
-                    this.toggleAnimation()
+                    this.setAnimation()
+                    this.removeAnimation()
 
                     if (this.currentGroup > this.imageGroups.length - 1) {
                         this.currentGroup = 0
@@ -296,7 +276,8 @@
                 },
                 before() {
                     this.currentGroup--
-                    this.toggleAnimation()
+                    this.setAnimation()
+                    this.removeAnimation()
 
                     if (this.currentGroup < 0) {
                         this.currentGroup = this.imageGroups.length - 1
@@ -356,6 +337,8 @@
                     this.NaN = false
                     this.maxNumber = false
                     this.toggle = false
+
+                    console.log(this.carousel.childNodes)
                 }
 
             })
