@@ -103,19 +103,19 @@
             <h2 class="font-bold md:text-2xl mb-10">📊 JSON Data 📊</h2>
 
 
-            <small class="font-bold" :class="$store.data.NaN ? 'text-red-600' : 'text-green-600'"
-                x-text="$store.data.NaN ? 'Please Enter a Number Between 1 and 200!' : 'Insert a Number and get the phrase!'"></small>
+            <small class="font-bold" :class="$store?.data?.NaN ? 'text-red-600' : 'text-green-600'"
+                x-text="$store?.data?.NaN ? 'Please Enter a Number Between 1 and 200!' : 'Insert a Number and get the phrase!'"></small>
 
             <div class="py-5 flex">
-                <input x-ref="input" type="text" class="json-input invalid rounded-l" x-model="$store.data.jsonSearch"
+                <input x-ref="input" type="text" class="json-input invalid rounded-l" x-model="$store?.data?.jsonSearch"
                     placeholder="Search...">
                 <button :disabled="!$store.data.jsonSearch || $store.data.NaN"
-                    :class="!$store.data.jsonSearch || $store.data.NaN ? 'disabled' : 'btn-no-radius bg-zinc-900 rounded-r cursor-pointer'"
-                    type="submit" @click="$store.data.fetchData()"
-                    x-text="!$store.data.jsonSearch || $store.data.NaN ? '🤌🏼' : 'Send'">
+                    :class="!$store?.data?.jsonSearch || $store?.data?.NaN ? 'disabled' : 'btn-no-radius bg-zinc-900 rounded-r cursor-pointer'"
+                    type="submit" @click="$store?.data?.fetchData()"
+                    x-text="!$store?.data?.jsonSearch || $store?.data?.NaN ? '🤌🏼' : 'Send'">
                 </button>
             </div>
-            <p class="md:text-2xl font-semibold" x-show="$store.data.placeholder.title && !$store.data.NaN"
+            <p class="md:text-2xl font-semibold" x-show="$store?.data?.placeholder?.title && !$store?.data?.NaN"
                 x-text="$store?.data?.placeholder?.title" x-transition:enter="transition ease-in-out duration-300"
                 x-transition:enter-start="opacity-0 scale-30" x-transition:enter-end="opacity-100 scale-100"
                 x-transition:leave="transition ease-in-out duration-300"
@@ -204,8 +204,26 @@
                     <button class="text-gray-400 font-semibold text-sm" @click="open = false">Close Dialog</button>
                 </div>
             </div>
-
         </section>
+
+
+        <section>
+            <div class="mb-10">
+                <h2 class="font-bold md:text-2xl">🕺🏼 Carousel 🕺🏼</h2>
+            </div>
+
+            <div class="flex items-center justify-evenly" x-data>
+                <i @click="$store.data.before()" class="fa-solid fa-arrow-left cursor-pointer hover:text-gray-500 transition duration-150 ease-in-out"></i>
+                <div class="flex gap-5 items-center" x-show="$store.data.imageGroups" x-transition>
+                    <template x-for="image, index in $store.data.imageGroups[$store.data.current]" :key="index">
+                            <img class="h-48 w-48" :src="image" />
+                    </template>
+                </div>
+                <i @click="$store.data.next()" class="fa-solid fa-arrow-right cursor-pointer hover:text-gray-500 transition duration-150 ease-in-out"></i>
+            </div>
+        </section>
+
+
     </main>
 
     <script>
@@ -215,6 +233,28 @@
                 el.textContent = el.textContent.toUpperCase()
             })
             Alpine.store('data', {
+
+                // carousel
+
+                imageGroups: [
+                    ['./assets/photo-1.jpg','./assets/photo-1.jpg','./assets/photo-1.jpg',],
+                    ['./assets/photo-2.jpg','./assets/photo-2.jpg','./assets/photo-2.jpg',],
+                    ['./assets/photo-3.jpg','./assets/photo-3.jpg','./assets/photo-3.jpg',],
+                ],
+
+                current: 0,
+                next() {
+                    this.current++
+                    if(this.current > this.imageGroups.length - 1) {
+                        this.current = 0
+                    }
+                },
+                before() {
+                    this.current--
+                    if(this.current < 0) {
+                        this.current = this.imageGroups.length - 1
+                    }
+                },
 
                 // increment
                 count: 0,
@@ -269,6 +309,8 @@
                     this.NaN = false
                     this.maxNumber = false
                     this.toggle = false
+
+                    console.log(this.current)
                 }
 
             })
