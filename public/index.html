@@ -103,16 +103,16 @@
             <h2 class="font-bold md:text-2xl mb-10">📊 JSON Data 📊</h2>
 
 
-            <small class="font-bold" :class="$store?.data?.NaN ? 'text-red-600' : 'text-green-600'"
-                x-text="$store?.data?.NaN ? 'Please Enter a Number Between 1 and 200!' : 'Insert a Number and get the phrase!'"></small>
+            <small class="font-bold" :class="$store.data.NaN ? 'text-red-600' : 'text-green-600'"
+                x-text="$store.data.NaN ? 'Please Enter a Number Between 1 and 200!' : 'Insert a Number and get the phrase!'"></small>
 
             <div class="py-5 flex">
-                <input x-ref="input" type="text" class="json-input invalid rounded-l" x-model="$store?.data?.jsonSearch"
+                <input x-ref="input" type="text" class="json-input invalid rounded-l" x-model="$store.data.jsonSearch"
                     placeholder="Search...">
                 <button :disabled="!$store.data.jsonSearch || $store.data.NaN"
-                    :class="!$store?.data?.jsonSearch || $store?.data?.NaN ? 'disabled' : 'btn-no-radius bg-zinc-900 rounded-r cursor-pointer'"
-                    type="submit" @click="$store?.data?.fetchData()"
-                    x-text="!$store?.data?.jsonSearch || $store?.data?.NaN ? '🤌🏼' : 'Send'">
+                    :class="!$store.data.jsonSearch || $store.data.NaN ? 'disabled' : 'btn-no-radius bg-zinc-900 rounded-r cursor-pointer'"
+                    type="submit" @click="$store.data.fetchData()"
+                    x-text="!$store.data.jsonSearch || $store.data.NaN ? '🤌🏼' : 'Send'">
                 </button>
             </div>
             <p class="md:text-2xl font-semibold" x-show="$store?.data?.placeholder?.title && !$store?.data?.NaN"
@@ -212,17 +212,34 @@
                 <h2 class="font-bold md:text-2xl">🕺🏼 Carousel 🕺🏼</h2>
             </div>
 
-            <div class="flex items-center justify-evenly" x-data>
-                <i @click="$store.data.before()" class="fa-solid fa-arrow-left cursor-pointer hover:text-gray-500 transition duration-150 ease-in-out"></i>
-                <div class="flex gap-5 items-center">
-                    <template x-for="image, index in $store.data.imageGroups[$store.data.current]" :key="index" >
-                        <div  @mouseover="image.showTooltip = true" @mouseout="image.showTooltip = false" class="image-container relative" >
-                            <img class="h-48 w-48" :src="image.pic"  />
-                            <span class="tooltip absolute bottom-2 right-5 px-8 rounded-md py-2 flex justify-center items-center text-xs" x-text="image.tooltip" x-show="image.showTooltip" x-transition></span>
+            <div class="flex items-center justify-evenly" x-data x-init="console.log($store.data.carousel)">
+                <i @click="$store.data.before()"
+                    class="fa-solid fa-arrow-left fa-4x cursor-pointer hover:text-gray-500 transition duration-150 ease-in-out"></i>
+                <div id="carousel" class="flex gap-5 items-center">
+                    <template x-for="image, index in $store.data.imageGroups[$store.data.currentGroup]" :key="index">
+                        <div
+                            @mouseover="image.showTooltip = true"
+                            @mouseout="image.showTooltip = false"
+                            class="shadow-lg p-5 image-container relative">
+
+                            <img class="h-48 w-48" :src="image.pic" />
+                            <span
+                                class="tooltip absolute bottom-8 right-8 px-3 rounded-md py-1 flex justify-center items-center text-xs"
+                                x-text="image.tooltip"
+                                x-show="image.showTooltip"
+                                x-transition:enter="transition ease-in-out duration-1000"
+                                x-transition:enter-start="opacity-0"
+                                x-transition:enter-end="opacity-100"
+                                x-transition:leave="transition ease-in-out duration-1000"
+                                x-transition:leave-start="opacity-100"
+                                x-transition:leave-end="opacity-0">
+                            </span>
+
                         </div>
                     </template>
                 </div>
-                <i @click="$store.data.next()" class="fa-solid fa-arrow-right cursor-pointer hover:text-gray-500 transition duration-150 ease-in-out"></i>
+                <i @click="$store.data.next()"
+                    class="fa-solid fa-4x fa-arrow-right cursor-pointer hover:text-gray-500 transition duration-150 ease-in-out"></i>
             </div>
 
         </section>
@@ -240,38 +257,49 @@
 
                 // carousel
 
+                carousel: document.getElementById('carousel'),
+
                 imageGroups: [
                     [
-                        {id: 0, tooltip: 'a plant', showTooltip: false, pic:'./assets/photo-1.jpg'},
-                        {id: 1, tooltip: 'a plant', showTooltip: false, pic:'./assets/photo-1.jpg'},
-                        {id: 2, tooltip: 'a plant', showTooltip: false, pic:'./assets/photo-1.jpg'}
+                        { id: 0, tooltip: 'a plant', showTooltip: false, pic: './assets/photo-1.jpg' },
+                        { id: 1, tooltip: 'a plant', showTooltip: false, pic: './assets/photo-1.jpg' },
+                        { id: 2, tooltip: 'a plant', showTooltip: false, pic: './assets/photo-1.jpg' }
                     ],
                     [
-                        {id: 3,tooltip: 'skateboy', showTooltip: false, pic:'./assets/photo-2.jpg'},
-                        {id: 4,tooltip: 'skateboy', showTooltip: false, pic:'./assets/photo-2.jpg'},
-                        {id: 5,tooltip: 'skateboy', showTooltip: false, pic:'./assets/photo-2.jpg'}
+                        { id: 3, tooltip: 'skateboy', showTooltip: false, pic: './assets/photo-2.jpg' },
+                        { id: 4, tooltip: 'skateboy', showTooltip: false, pic: './assets/photo-2.jpg' },
+                        { id: 5, tooltip: 'skateboy', showTooltip: false, pic: './assets/photo-2.jpg' }
                     ],
                     [
-                        {id: 6,tooltip: 'lighthouse', showTooltip: false, pic:'./assets/photo-3.jpg'},
-                        {id: 7,tooltip: 'lighthouse', showTooltip: false, pic:'./assets/photo-3.jpg'},
-                        {id: 8,tooltip: 'lighthouse', showTooltip: false, pic:'./assets/photo-3.jpg'}
+                        { id: 6, tooltip: 'lighthouse', showTooltip: false, pic: './assets/photo-3.jpg' },
+                        { id: 7, tooltip: 'lighthouse', showTooltip: false, pic: './assets/photo-3.jpg' },
+                        { id: 8, tooltip: 'lighthouse', showTooltip: false, pic: './assets/photo-3.jpg' }
                     ],
                 ],
-                showTooltip(id) {
 
+
+                currentGroup: 0,
+                toggleAnimation() {
+                    this.carousel.classList.add('show')
+                    setTimeout(() => {
+                        this.carousel.classList.remove('show')
+                    }, 1000);
                 },
 
-                current: 0,
                 next() {
-                    this.current++
-                    if(this.current > this.imageGroups.length - 1) {
-                        this.current = 0
+                    this.currentGroup++
+                    this.toggleAnimation()
+
+                    if (this.currentGroup > this.imageGroups.length - 1) {
+                        this.currentGroup = 0
                     }
                 },
                 before() {
-                    this.current--
-                    if(this.current < 0) {
-                        this.current = this.imageGroups.length - 1
+                    this.currentGroup--
+                    this.toggleAnimation()
+
+                    if (this.currentGroup < 0) {
+                        this.currentGroup = this.imageGroups.length - 1
                     }
                 },
 
@@ -328,8 +356,6 @@
                     this.NaN = false
                     this.maxNumber = false
                     this.toggle = false
-
-                    console.log(this.current)
                 }
 
             })

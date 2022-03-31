@@ -296,27 +296,45 @@ main section {
 }
 
 .tooltip {
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    background-color: #333;
-    color: #cecece;
+    /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
+    background-color: #fff;
+    color: #333;
 }
 .tooltip::after {
     content: '';
     position: absolute;
-    top: -4px;
+    top: -10px;
     left: 0;
     width: 0;
     height: 0;
-    border: 20px solid transparent;
+    transform: rotate(-30deg);
+    border: 10px solid transparent;
     border-top: 0;
-    border-bottom: 10px solid #333;
+    border-bottom: 20px solid #fff;
+}
+.show {
+    animation: show 1s ease-in-out;
 }
 
+@keyframes show {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+.image-container,
 .image-container img {
     transition: all .5s ease-in-out;
+}
+.image-container img {
     object-fit: cover;
 }
+.image-container:hover {
+    background-color: #333;
+}
 .image-container:hover img {
-    opacity: 0.3;
+    opacity: 0.6;
     border-radius: .5em;
 }
