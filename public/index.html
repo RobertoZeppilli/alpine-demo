@@ -214,13 +214,17 @@
 
             <div class="flex items-center justify-evenly" x-data>
                 <i @click="$store.data.before()" class="fa-solid fa-arrow-left cursor-pointer hover:text-gray-500 transition duration-150 ease-in-out"></i>
-                <div class="flex gap-5 items-center" x-show="$store.data.imageGroups" x-transition>
-                    <template x-for="image, index in $store.data.imageGroups[$store.data.current]" :key="index">
-                            <img class="h-48 w-48" :src="image" />
+                <div class="flex gap-5 items-center">
+                    <template x-for="image, index in $store.data.imageGroups[$store.data.current]" :key="index" >
+                        <div  @mouseover="image.showTooltip = true" @mouseout="image.showTooltip = false" class="image-container relative" >
+                            <img class="h-48 w-48" :src="image.pic"  />
+                            <span class="tooltip absolute bottom-2 right-5 px-8 rounded-md py-2 flex justify-center items-center text-xs" x-text="image.tooltip" x-show="image.showTooltip" x-transition></span>
+                        </div>
                     </template>
                 </div>
                 <i @click="$store.data.next()" class="fa-solid fa-arrow-right cursor-pointer hover:text-gray-500 transition duration-150 ease-in-out"></i>
             </div>
+
         </section>
 
 
@@ -237,10 +241,25 @@
                 // carousel
 
                 imageGroups: [
-                    ['./assets/photo-1.jpg','./assets/photo-1.jpg','./assets/photo-1.jpg',],
-                    ['./assets/photo-2.jpg','./assets/photo-2.jpg','./assets/photo-2.jpg',],
-                    ['./assets/photo-3.jpg','./assets/photo-3.jpg','./assets/photo-3.jpg',],
+                    [
+                        {id: 0, tooltip: 'a plant', showTooltip: false, pic:'./assets/photo-1.jpg'},
+                        {id: 1, tooltip: 'a plant', showTooltip: false, pic:'./assets/photo-1.jpg'},
+                        {id: 2, tooltip: 'a plant', showTooltip: false, pic:'./assets/photo-1.jpg'}
+                    ],
+                    [
+                        {id: 3,tooltip: 'skateboy', showTooltip: false, pic:'./assets/photo-2.jpg'},
+                        {id: 4,tooltip: 'skateboy', showTooltip: false, pic:'./assets/photo-2.jpg'},
+                        {id: 5,tooltip: 'skateboy', showTooltip: false, pic:'./assets/photo-2.jpg'}
+                    ],
+                    [
+                        {id: 6,tooltip: 'lighthouse', showTooltip: false, pic:'./assets/photo-3.jpg'},
+                        {id: 7,tooltip: 'lighthouse', showTooltip: false, pic:'./assets/photo-3.jpg'},
+                        {id: 8,tooltip: 'lighthouse', showTooltip: false, pic:'./assets/photo-3.jpg'}
+                    ],
                 ],
+                showTooltip(id) {
+
+                },
 
                 current: 0,
                 next() {

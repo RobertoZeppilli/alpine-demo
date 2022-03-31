@@ -294,3 +294,29 @@ main section {
         transform: translateX(4px);
     }
 }
+
+.tooltip {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    background-color: #333;
+    color: #cecece;
+}
+.tooltip::after {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: 0;
+    width: 0;
+    height: 0;
+    border: 20px solid transparent;
+    border-top: 0;
+    border-bottom: 10px solid #333;
+}
+
+.image-container img {
+    transition: all .5s ease-in-out;
+    object-fit: cover;
+}
+.image-container:hover img {
+    opacity: 0.3;
+    border-radius: .5em;
+}
