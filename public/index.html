@@ -270,16 +270,33 @@
                     }, 3000)
                 },
                 setAnimation() {
-                    this.carousel.childNodes[2].classList.add('show')
-                    this.carousel.childNodes[3].classList.add('show')
-                    this.carousel.childNodes[4].classList.add('show')
+                    const { childNodes } = this.carousel
+
+                    childNodes.forEach((node, index) => {
+                        switch(index) {
+                            case 2:
+                                node.classList.add('show')
+                                break;
+                            case 3:
+                                node.classList.add('show-delay')
+                                break;
+                            case 4:
+                                node.classList.add('show-delay-2')
+                                break;
+                        }
+                    })
                 },
                 removeAnimation() {
+                    const { childNodes } = this.carousel
                     setTimeout(() => {
-                        this.carousel.childNodes[2].classList.remove('show')
-                        this.carousel.childNodes[3].classList.remove('show')
-                        this.carousel.childNodes[4].classList.remove('show')
-                    }, 800)
+                        childNodes.forEach((node, index) => {
+                            if (index === 2 || index === 3 || index === 4) {
+                                node.classList.remove('show')
+                                node.classList.remove('show-delay')
+                                node.classList.remove('show-delay-2')
+                            }
+                        })
+                    }, 1500)
                 },
 
                 next() {

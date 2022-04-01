@@ -357,7 +357,13 @@ main > div:after {
 
 
 .show {
-    animation: show .8s ease-in-out;
+    animation: show 1s ease-in-out;
+}
+.show-delay {
+    animation: show 1.2s ease-in-out;
+}
+.show-delay-2 {
+    animation: show 1.4s ease-in-out;
 }
 
 @keyframes show {
