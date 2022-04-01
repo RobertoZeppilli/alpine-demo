@@ -181,15 +181,21 @@
                 <h2 class="font-bold md:text-2xl">🕺🏼 Carousel 🕺🏼</h2>
             </div>
 
-            <div class="flex items-center justify-evenly" x-data x-init="console.log($store.data.carousel)">
-                <div
-                    class="icon-left rounded-full hover:shadow-lg p-2 bg-white shadow-sm hover:text-gray-500 cursor-pointer transition duration-150 ease-in-out"
-                    @click="$store.data.before()"
-                >
+            <div class="flex items-center justify-evenly" x-data x-init="
+                $store.data.startSlide()
+
+                $watch('$store.data.stopInterval', value => {
+                    if(value) {
+                        clearInterval($store.data.slider)
+                    }
+                })
+            ">
+                <div class="icon-left rounded-full hover:shadow-lg p-2 bg-white shadow-sm hover:text-gray-500 cursor-pointer transition duration-150 ease-in-out"
+                    @click="$store.data.before()">
                     <i class="fa-solid fa-arrow-left"></i>
                 </div>
                 <div id="carousel" class="flex gap-5 items-center">
-                    <template x-for="image, index in $store.data.imageGroups[$store.data.currentGroup]" :key="index">
+                    <template x-for="(image, index) in $store.data.imageGroups[$store.data.currentGroup]" :key="index">
                         <div @mouseover="image.showTooltip = true" @mouseout="image.showTooltip = false"
                             class="shadow-lg p-5 image-container relative">
 
@@ -206,10 +212,8 @@
                         </div>
                     </template>
                 </div>
-                <div
-                    class="icon-right rounded-full p-2 bg-white shadow-sm hover:shadow-lg cursor-pointer hover:text-gray-500 transition duration-150 ease-in-out"
-                    @click="$store.data.next()"
-                >
+                <div class="icon-right rounded-full p-2 bg-white shadow-sm hover:shadow-lg cursor-pointer hover:text-gray-500 transition duration-150 ease-in-out"
+                    @click="$store.data.next()">
                     <i class="fa-solid fa-arrow-right"></i>
                 </div>
             </div>
@@ -250,8 +254,21 @@
                     ],
                 ],
 
-
+                stopInterval: false,
                 currentGroup: 0,
+                slider: null,
+
+                startSlide() {
+                    this.slider = setInterval(() => {
+                        this.currentGroup++
+                        this.setAnimation()
+                        this.removeAnimation()
+
+                        if (this.currentGroup > this.imageGroups.length - 1) {
+                            this.currentGroup = 0
+                        }
+                    }, 3000)
+                },
                 setAnimation() {
                     this.carousel.childNodes[2].classList.add('show')
                     this.carousel.childNodes[3].classList.add('show')
@@ -262,10 +279,11 @@
                         this.carousel.childNodes[2].classList.remove('show')
                         this.carousel.childNodes[3].classList.remove('show')
                         this.carousel.childNodes[4].classList.remove('show')
-                    }, 500)
+                    }, 800)
                 },
 
                 next() {
+                    this.stopInterval = true
                     this.currentGroup++
                     this.setAnimation()
                     this.removeAnimation()
@@ -275,6 +293,7 @@
                     }
                 },
                 before() {
+                    this.stopInterval = true
                     this.currentGroup--
                     this.setAnimation()
                     this.removeAnimation()
@@ -328,6 +347,7 @@
                     }
                 },
 
+                // copy to clipboard
                 copyToClipboard() {
                     navigator.clipboard.writeText($refs.content.value)
                 },

@@ -357,7 +357,7 @@ main > div:after {
 
 
 .show {
-    animation: show .5s ease-out;
+    animation: show .8s ease-in-out;
 }
 
 @keyframes show {
