@@ -23,9 +23,11 @@
 
 main section {
     padding: 1.5em;
-    margin-bottom: 4em;
     border: .2em solid black;
     border-radius: .4em;
+}
+main section:not(:last-child) {
+    margin-bottom: 4em;
 }
 main > div {
     position: relative;

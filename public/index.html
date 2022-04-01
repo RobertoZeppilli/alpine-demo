@@ -82,7 +82,7 @@
         <!-- dark mode -->
         <section :class="$store.data.toggle ? 'bg-zinc-900 text-white' : 'bg-white-200 text-zinc-900'"
             class="flex flex-col md:flex-row items-center justify-between" x-data>
-            <h2 class="font-bold md:text-2xl mb-5 md:mb-0">🌘 Dark Mode Toggle 🌘</h2>
+            <h2 class="font-bold md:text-2xl mb-5 md:mb-0"><span x-text="!$store.data.toggle ? '🌞' : '🌜'"></span>  Dark Mode Toggle <span x-text="!$store.data.toggle ? '🌞' : '🌜'"></span></h2>
             <input type="checkbox" id="toggle" class="toggle--checkbox" @click="$store.data.toggleDark()">
             <label for="toggle" class="toggle--label">
                 <span class="toggle--label-background"></span>
@@ -190,11 +190,11 @@
                     }
                 })
             ">
-                <div class="icon-left rounded-full hover:shadow-lg p-2 bg-white shadow-sm hover:text-gray-500 cursor-pointer transition duration-150 ease-in-out"
+                <div class="hidden sm:block icon-left rounded-full hover:shadow-lg p-2 bg-white shadow-sm hover:text-gray-500 cursor-pointer transition duration-150 ease-in-out"
                     @click="$store.data.before()">
                     <i class="fa-solid fa-arrow-left"></i>
                 </div>
-                <div id="carousel" class="flex gap-5 items-center">
+                <div id="carousel" class="flex flex-col lg:flex-row gap-5 items-center">
                     <template x-for="(image, index) in $store.data.imageGroups[$store.data.currentGroup]" :key="index">
                         <div @mouseover="image.showTooltip = true" @mouseout="image.showTooltip = false"
                             class="shadow-lg p-5 image-container relative">
@@ -212,7 +212,7 @@
                         </div>
                     </template>
                 </div>
-                <div class="icon-right rounded-full p-2 bg-white shadow-sm hover:shadow-lg cursor-pointer hover:text-gray-500 transition duration-150 ease-in-out"
+                <div class="hidden sm:block icon-right rounded-full p-2 bg-white shadow-sm hover:shadow-lg cursor-pointer hover:text-gray-500 transition duration-150 ease-in-out"
                     @click="$store.data.next()">
                     <i class="fa-solid fa-arrow-right"></i>
                 </div>
